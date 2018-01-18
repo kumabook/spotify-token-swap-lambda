@@ -1,0 +1,6 @@
+{
+  "Runtime": "nodejs6.10",
+  "Timeout": 60,
+  "MemorySize": 128,
+  "Publish": true
+}
