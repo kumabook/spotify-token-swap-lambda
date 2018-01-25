@@ -32,10 +32,9 @@ exports.swap = (event, context) => {
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
       if (response.statusCode === 200) {
-        resolve(body);
-      } else {
-        reject(body);
+        body.refresh_token = encrpytion.encrypt(body.refresh_token, encSecret);
       }
+      resolve(body);
     });
   }).then(value => context.succeed(value))
     .catch(e => context.fail(JSON.stringify(e)));
@@ -60,11 +59,9 @@ exports.refresh = (event, context) => {
   return new Promise((resolve, reject) => {
     request(options, function (error, response, body) {
       if (response.statusCode === 200 && !!body.refresh_token) {
-        body.refresh_token = encrpytion.encrypt(body.refresh_token);
-        resolve(body);
-      } else {
-        reject(body);
+        body.refresh_token = encrpytion.encrypt(body.refresh_token, encSecret);
       }
+      resolve(body);
     });
   }).then(value => context.succeed(value))
     .catch(e => context.fail(e));
